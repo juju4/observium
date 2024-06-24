@@ -45,10 +45,10 @@
 - name: update config file settings
   replace: dest="{{ observium_rootdir }}/config.php" regexp="{{ item.re }}" replace="{{ item.rep }}"
   with_items:
-    - { re: "$config['db_host'] = '.*';", rep: "$config['db_host'] = 'localhost';" }
-    - { re: "$config['db_user'] = '.*';", rep: "$config['db_user'] = '{{ observium_dbuser }}';" }
-    - { re: "$config['db_pass'] = '.*';", rep: "$config['db_pass'] = '{{ observium_dbpass }}';" }
-    - { re: "$config['db_name'] = '.*';", rep: "$config['db_name'] = '{{ observium_db }}';" }
+    - { re: "\\$config\\['db_host'\\] += +'.*';", rep: "$config['db_host'] = 'localhost';" }
+    - { re: "\\$config\\['db_user'\\] += +'.*';", rep: "$config['db_user'] = '{{ observium_dbuser }}';" }
+    - { re: "\\$config\\['db_pass'\\] += +'.*';", rep: "$config['db_pass'] = '{{ observium_dbpass }}';" }
+    - { re: "\\$config\\['db_name'\\] += +'.*';", rep: "$config['db_name'] = '{{ observium_db }}';" }
 
 - name: update fping location in config file
   lineinfile: dest="{{ observium_rootdir }}/config.php" line="$config['fping'] = \"/sbin/fping\";"

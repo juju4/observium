@@ -1,5 +1,19 @@
 ---
-
+- name: yum | Repos Install
+  yum:
+    name: "{{ observium_repos }}"
+    state: present
+    update_cache: yes
+  register: pkg_result
+  until: pkg_result is success
+  
+- name: yum | Repo Config
+  yum_repository:
+    name: remi-php72
+    description: Remi's PHP 7.2 RPM repository for Enterprise Linux $releasever - $basearch
+    mirrorlist: http://rpms.remirepo.net/enterprise/$releasever/php72/mirror
+    enabled: yes
+  
 - name: yum | observium dependencies install
   yum:
     name: "{{ observium_pkg + observium_pkg_php | default(_observium_pkg_php) }}"
@@ -21,6 +35,12 @@
 - name: disable selinux (observium recommendation...)
   selinux: state=disabled
 
+- name: Open firewall port
+  firewalld:
+    port: "{{ observium_vhostport }}/tcp"
+    permanent: yes
+    state: enabled
+  
 - name: Check apache listening interface
   lineinfile:
     dest: /etc/httpd/conf/httpd.conf

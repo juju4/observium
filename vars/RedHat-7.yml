@@ -1,4 +1,8 @@
 ---
+observium_repos:
+    - http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+    - http://yum.opennms.org/repofiles/opennms-repo-stable-rhel7.noarch.rpm
+    - http://rpms.remirepo.net/enterprise/remi-release-7.rpm
 
 observium_pkg:
     - wget
